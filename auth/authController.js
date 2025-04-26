@@ -1,0 +1,61 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const db = require('../config/db');
+const generateToken = require('../utils/generateToken');
+
+// User Signup
+exports.register = async (req, res) => {
+  const { full_name, email, password, phone, address } = req.body;
+  try {
+    // Check if user exists
+    const [user] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+    if (user.length > 0) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert user
+    await db.execute('INSERT INTO users (full_name, email, password, phone, address) VALUES (?, ?, ?, ?, ?)', 
+      [full_name, email, hashedPassword, phone, address]
+    );
+
+    res.status(201).json({ message: 'User registered successfully' });
+
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// User Login
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const [user] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+    if (user.length === 0) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user[0].password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const token = generateToken(user[0].id);
+
+    res.status(200).json({ 
+      message: 'Login successful', 
+      token, 
+      user: {
+        id: user[0].id,
+        full_name: user[0].full_name,
+        email: user[0].email,
+        role_id: user[0].role_id, // Useful for subscription and permissions
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
