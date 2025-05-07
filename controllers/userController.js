@@ -16,8 +16,22 @@ exports.getUserById = (req, res) => {
 };
 
 exports.createUser = (req, res) => {
-  const { name, email, role } = req.body;
-  db.query('INSERT INTO users (name, email, role) VALUES (?, ?, ?)', [name, email, role], (err, result) => {
+  const { 
+    name,
+    email,
+    password,
+    number,
+    country,
+    address,
+    role,
+   } = req.body;
+  db.query('INSERT INTO users (full_name, email, password, department_id, phone, address) VALUES (?, ?, ?, ?, ?, ?, ?)', [    name,
+    email,
+    password,
+    number,
+    country,
+    address,
+    role,], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     res.status(201).json({ id: result.insertId, name, email, role });
   });

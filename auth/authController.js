@@ -5,28 +5,41 @@ const generateToken = require('../utils/generateToken');
 
 // User Signup
 exports.register = async (req, res) => {
-  const { full_name, email, password, phone, address } = req.body;
-  try {
-    // Check if user exists
-    const [user] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
-    if (user.length > 0) {
-      return res.status(400).json({ message: 'User already exists' });
+    const { name, email, password, role, number, address } = req.body;
+  
+    try {
+      // Check if user exists
+      const [user] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+      if (user.length > 0) {
+        return res.status(400).json({ message: 'User already exists' });
+      }
+  
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      const values = [
+        name,
+        email,
+        hashedPassword,
+        role,
+        number,
+        address,
+        1 // company_id
+      ];
+  
+      // Insert user into DB
+      await db.execute(
+        'INSERT INTO users (full_name, email, password, phone, address, role, company_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        values
+      );
+  
+      res.status(201).json({ message: 'User registered successfully' });
+  
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
     }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Insert user
-    await db.execute('INSERT INTO users (full_name, email, password, phone, address) VALUES (?, ?, ?, ?, ?)', 
-      [full_name, email, hashedPassword, phone, address]
-    );
-
-    res.status(201).json({ message: 'User registered successfully' });
-
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
+  };
+  
 
 // User Login
 exports.login = async (req, res) => {
