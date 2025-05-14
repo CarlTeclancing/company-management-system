@@ -5,7 +5,7 @@ const generateToken = require('../utils/generateToken');
 
 // User Signup
 exports.register = async (req, res) => {
-  const { name, email, password, role, number, address } = req.body;
+  const { name, email, password, role, number, address, companyId } = req.body;
 
   try {
     // Check if user exists
@@ -27,13 +27,13 @@ exports.register = async (req, res) => {
       role,
       number,
       address,
-      
+      companyId,
     ];
 
     // Insert user into DB — values wrapped in an array of arrays ✅
     await db.execute(
-      'INSERT INTO users (`full_name`, `email`, `password`, `role`, `phone`, `address`) VALUES (?, ?, ?, ?, ?, ?)',
-      values // ✅ direct flat array (7 ? marks above matches 7 values)
+      'INSERT INTO users (`full_name`, `email`, `password`, `role`, `phone`, `address`, `company_id`) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      values //  direct flat array (7 ? marks above matches 7 values)
     );
 
     res.status(201).json({ message: 'User registered successfully' });
