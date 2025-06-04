@@ -1,19 +1,42 @@
 const db = require('../config/db');
+const util = require('util');
 
-exports.getAllProjects = (req, res) => {
-  db.query('SELECT * FROM projects', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+
+// Promisify db.query
+const query = util.promisify(db.query).bind(db);
+
+exports.getAllProjects = async (req, res) => {
+  try {
+    const [results] = await query('SELECT * FROM projects');
     res.status(200).json(results);
-  });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-exports.getProjectById = (req, res) => {
-  const { id } = req.params;
-  db.query('SELECT * FROM projects WHERE id = ?', [id], (err, result) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.status(200).json(result[0]);
-  });
+// Controller: Get all projects by company ID
+exports.getProjectById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('Fetching projects for company ID:', id);
+
+    const results = await query('SELECT * FROM projects WHERE company_id = ?', [id]);
+
+    console.log('Query Results:', results);
+
+    if (results.length === 0) {
+      console.log('No projects found.');
+      res.status(404).json({ message: 'No projects found for this company.' });
+    }
+
+    res.status(200).json(results);
+  } catch (err) {
+    console.error('Error during DB query:', err);
+    res.status(500).json({ error: err.message });
+  }
 };
+
+
 
 exports.createProject = async (req, res) => {
   try {
@@ -28,7 +51,7 @@ exports.createProject = async (req, res) => {
       company_id,
     } = req.body;
 
-    const query = `
+    const sql = `
       INSERT INTO projects 
       (name, description, start_date, end_date, team, budget, created_by, company_id) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -44,31 +67,22 @@ exports.createProject = async (req, res) => {
       company_id,
     ];
 
-    db.query(query, values, (err, result) => {
-      if (err) {
-        console.error("Database error during project creation:", err);
-        return res.status(500).json({
-          success: false,
-          message: "An error occurred while creating the project.",
-          error: err.message,
-        });
-      }
+    const result = await query(sql, values);
 
-      res.status(201).json({
-        success: true,
-        message: "Project created successfully.",
-        project: {
-          id: result.insertId,
-          name,
-          description,
-          start_date: sdate,
-          end_date: edate,
-          team,
-          budget,
-          created_by: user_id,
-          company_id,
-        },
-      });
+    res.status(201).json({
+      success: true,
+      message: "Project created successfully.",
+      project: {
+        id: result.insertId,
+        name,
+        description,
+        start_date: sdate,
+        end_date: edate,
+        team,
+        budget,
+        created_by: user_id,
+        company_id,
+      },
     });
   } catch (error) {
     console.error("Unexpected error in createProject:", error);
@@ -80,21 +94,28 @@ exports.createProject = async (req, res) => {
   }
 };
 
+exports.updateProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, startDate, endDate, status, createdBy } = req.body;
 
-exports.updateProject = (req, res) => {
-  const { id } = req.params;
-  const { name, description, startDate, endDate, status, createdBy } = req.body;
-  db.query('UPDATE projects SET name = ?, description = ?, start_date = ?, end_date = ?, status = ?, created_by = ? WHERE id = ?', [name, description, startDate, endDate, status, createdBy], (err) => {
-    if (err) return res.status(500).json({ error: err.message });
-    //res.status(200).json({ id, name, description, startDate, endDate, status, createdBy });
-    res.status(201).json({ message: 'User registered successfully' });
-  });
+    await query(
+      'UPDATE projects SET name = ?, description = ?, start_date = ?, end_date = ?, status = ?, created_by = ? WHERE id = ?',
+      [name, description, startDate, endDate, status, createdBy, id]
+    );
+
+    res.status(200).json({ message: 'Project updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-exports.deleteProject = (req, res) => {
-  const { id } = req.params;
-  db.query('DELETE FROM projects WHERE id = ?', [id], (err) => {
-    if (err) return res.status(500).json({ error: err.message });
+exports.deleteProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await query('DELETE FROM projects WHERE id = ?', [id]);
     res.status(204).send();
-  });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
