@@ -1,32 +1,28 @@
 const db = require('../config/db');
-const util = require('util');
 
-
-// Promisify db.query
-const query = util.promisify(db.query).bind(db);
-
+// Controller: Get all projects
 exports.getAllProjects = async (req, res) => {
   try {
-    const [results] = await query('SELECT * FROM projects');
+    const [results] = await db.query('SELECT * FROM projects');
     res.status(200).json(results);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Controller: Get all projects by company ID
+// Controller: Get project by company ID
 exports.getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
     console.log('Fetching projects for company ID:', id);
 
-    const results = await query('SELECT * FROM projects WHERE company_id = ?', [id]);
+    const [results] = await db.query('SELECT * FROM projects WHERE company_id = ?', [id]);
 
     console.log('Query Results:', results);
 
     if (results.length === 0) {
       console.log('No projects found.');
-      res.status(404).json({ message: 'No projects found for this company.' });
+      return res.status(404).json({ message: 'No projects found for this company.' });
     }
 
     res.status(200).json(results);
@@ -36,8 +32,7 @@ exports.getProjectById = async (req, res) => {
   }
 };
 
-
-
+// Controller: Create a new project
 exports.createProject = async (req, res) => {
   try {
     const {
@@ -56,18 +51,9 @@ exports.createProject = async (req, res) => {
       (name, description, start_date, end_date, team, budget, created_by, company_id) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
-    const values = [
-      name,
-      description,
-      sdate,
-      edate,
-      team,
-      budget,
-      user_id,
-      company_id,
-    ];
+    const values = [name, description, sdate, edate, team, budget, user_id, company_id];
 
-    const result = await query(sql, values);
+    const [result] = await db.query(sql, values);
 
     res.status(201).json({
       success: true,
@@ -94,12 +80,13 @@ exports.createProject = async (req, res) => {
   }
 };
 
+// Controller: Update project
 exports.updateProject = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, startDate, endDate, status, createdBy } = req.body;
 
-    await query(
+    await db.query(
       'UPDATE projects SET name = ?, description = ?, start_date = ?, end_date = ?, status = ?, created_by = ? WHERE id = ?',
       [name, description, startDate, endDate, status, createdBy, id]
     );
@@ -110,10 +97,11 @@ exports.updateProject = async (req, res) => {
   }
 };
 
+// Controller: Delete project
 exports.deleteProject = async (req, res) => {
   try {
     const { id } = req.params;
-    await query('DELETE FROM projects WHERE id = ?', [id]);
+    await db.query('DELETE FROM projects WHERE id = ?', [id]);
     res.status(204).send();
   } catch (err) {
     res.status(500).json({ error: err.message });
