@@ -63,13 +63,19 @@ exports.createUser = async (req, res) => {
 // Update user
 exports.updateUser = (req, res) => {
   const { id } = req.params;
-  const { name, email, role } = req.body;
+  const { name, email, role, number, address, companyId, userId } = req.body;
   db.query(
-    'UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?',
-    [name, email, role, id],
+    'UPDATE users SET full_name = ?, email = ?, role = ?, phone = ?, address = ?, company_id = ? WHERE id = ?',
+    [name, email, role, number, address, companyId, userId ],
     (err) => {
       if (err) return res.status(500).json({ error: err.message });
-      res.status(200).json({ id, name, email, role });
+      res.status(200).json(
+        { 
+          success: true,
+          message: "Project created successfully.",
+          userInfo: {id, name, email, role, number, address, companyId} 
+        }
+      );
     }
   );
 };
