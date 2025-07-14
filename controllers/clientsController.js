@@ -31,23 +31,24 @@ exports.getClientById = async (req, res) => {
 
 // Create a new company
 exports.createClient = async (req, res) => {
-  const { name, email, phone, address, companyId } = req.body;
+  const { name, email, number, address, companyId } = req.body;
 
-  if (!name || !email || !phone || !address || !companyId) {
+  if (!name || !email || !number || !address || !companyId) {
+    console.log(req.body)
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
     const [result] = await db.query(
-      'INSERT INTO clients (name, email, phone, address, company_id) VALUES (?, ?, ?, ?)',
-      [ name, email, phone, address, companyId ]
+      'INSERT INTO clients (name, email, number, address, company_id) VALUES (?, ?, ?, ?, ?)',
+      [ name, email, number, address, companyId ]
     );
 
     res.status(201).json({
       id: result.insertId,
        name, 
        email, 
-       phone, 
+       number, 
        address, 
        companyId 
     });
@@ -60,23 +61,24 @@ exports.createClient = async (req, res) => {
 // Update an existing company
 exports.updateClient = async (req, res) => {
   const { id } = req.params;
-  const {  name, email, phone, address, companyId  } = req.body;
+  const {  name, email, number, address, companyId  } = req.body;
 
-  if (!name || !email || !phone || !address || !companyId) {
+  if (!name || !email || !number || !address || !companyId) {
+
     return res.status(400).json({ error: 'All fields are required for update' });
   }
 
   try {
     const [result] = await db.query(
-      'UPDATE clients SET name = ?, email = ?, phone = ?, address = ? WHERE id = ?',
-      [ name, email, phone, address, id]
+      'UPDATE clients SET name = ?, email = ?, number = ?, address = ? WHERE id = ?',
+      [ name, email, number, address, id]
     );
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: 'Clients not found' });
     }
 
-    res.status(200).json({ id, name, email, phone, address, });
+    res.status(200).json({ id, name, email, number, address, });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to update Client' });
