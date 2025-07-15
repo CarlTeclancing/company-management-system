@@ -34,50 +34,29 @@ exports.getMeetingById = async (req, res) => {
 
 // Controller: Create a new project
 exports.createMeeting = async (req, res) => {
+  const {
+      title,
+      date,
+      startTime,
+      endTime,
+      meetingType,
+      platform,
+      meetingLink,
+      user_id,
+      company_id,
+  } = req.body;
+  if (!title || !date || !startTime || !endTime || !meetingType || !platform || !meetingLink || !user_id || !company_id) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
   try {
-    const {
-        title,
-        date,
-        startTime,
-        endTime,
-        meetingType,
-        platform,
-        meetingLink,
-        user_id,
-        company_id,
-    } = req.body;
-
-    const sql = `
-      INSERT INTO meetings 
-      (name, description, start_date, end_date, team, budget, created_by, company_id) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const values = [name, description, sdate, edate, team, budget, user_id, company_id];
-
-    const [result] = await db.query(sql, values);
-
-    res.status(201).json({
-      success: true,
-      message: "Project created successfully.",
-      project: {
-        id: result.insertId,
-        name,
-        description,
-        start_date: sdate,
-        end_date: edate,
-        team,
-        budget,
-        created_by: user_id,
-        company_id,
-      },
-    });
+    const [result] = await db.query(
+      'INSERT INTO meetings (title, date, start_time, end_time, type, platform, meeting_link, scheduled_by, date_time, company_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [title, date, startTime, endTime, meetingType, platform, meetingLink, user_id, new Date(), company_id]
+    );
+    res.status(201).json({ id: result.insertId, ...req.body });
   } catch (error) {
-    console.error("Unexpected error in createProject:", error);
-    res.status(500).json({
-      success: false,
-      message: "Internal server error. Please try again later.",
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -85,11 +64,20 @@ exports.createMeeting = async (req, res) => {
 exports.updateMeeting = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, startDate, endDate, status, createdBy } = req.body;
-
+      const {
+      title,
+      date,
+      startTime,
+      endTime,
+      meetingType,
+      platform,
+      meetingLink,
+      user_id,
+      company_id,
+  } = req.body;
     await db.query(
-      'UPDATE meetings SET name = ?, description = ?, start_date = ?, end_date = ?, status = ?, created_by = ? WHERE id = ?',
-      [name, description, startDate, endDate, status, createdBy, id]
+      'UPDATE meetings SET title = ?, date = ?, start_time = ?, end_time = ?, type = ?, platform = ?, meeting_link = ?, scheduled_by = ?, date_time = ?, company_id = ? WHERE id = ?',
+      [title, date, startTime, endTime, meetingType, platform, meetingLink, user_id, new Date(), company_id]
     );
 
     res.status(200).json({ message: 'Project updated successfully' });
