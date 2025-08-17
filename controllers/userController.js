@@ -1,5 +1,6 @@
 const db = require('../config/db');
-const bcrypt = require('bcrypt'); // Make sure bcrypt is required
+const bcrypt = require('bcryptjs');
+ // Make sure bcrypt is required
 
 // Get all users
 exports.getAllUsers = (req, res) => {
