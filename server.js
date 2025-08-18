@@ -26,6 +26,8 @@ app.use(morgan('dev'));
 
 
 const authRoutes = require('./auth/authRoutes');
+const invoiceRoute = require('./routes/invoiceRoutes')
+const itemRoutes = require('./routes/itemRoutes')
 
 
 app.use('/v1/api/auth', authRoutes);
@@ -37,6 +39,9 @@ app.use('/v1/api/tasks', require('./routes/taskRoutes'));
 app.use('/v1/api/finance', require('./routes/financeRoutes'));
 app.use('/v1/api/meetings', require('./routes/meetingsRoutes'));
 app.use('/V1/api/clients', require('./routes/clientsRoutes'));
+
+app.use('/v1/api/invoices', invoiceRoute)
+app.use('/v1/api/items', itemRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));
