@@ -35,7 +35,7 @@ app.use('/v1/api/users', require('./routes/userRoutes'));
 app.use('/v1/api/company', require('./routes/companyRoutes'));
 app.use('/v1/api/projects', require('./routes/projectRoutes'));
 app.use('/v1/api/tasks', require('./routes/taskRoutes'));
-// app.use('/api/inventory', require('./routes/inventoryRoutes'));
+app.use('/v1/api/inventory', require('./routes/inventoryRoutes'));
 app.use('/v1/api/finance', require('./routes/financeRoutes'));
 app.use('/v1/api/meetings', require('./routes/meetingsRoutes'));
 app.use('/V1/api/clients', require('./routes/clientsRoutes'));
