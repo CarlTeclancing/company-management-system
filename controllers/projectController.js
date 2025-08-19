@@ -107,3 +107,19 @@ exports.deleteProject = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+exports.changeStatus = async(req ,res)=>{
+  try{  
+    const {projectId ,status} = req.body
+    if(!projectId || !status){
+      return res.status(400).json({error:'All fields required'})
+    }
+    const [result] = await db.query('update projects set status=? where id=?' ,[status ,projectId])
+    return res.status(200).json({message:'project status updated successfully'})
+  }
+  catch(e){
+    console.log(e);
+    return res.status(500).json({error:e.message})
+  }
+}

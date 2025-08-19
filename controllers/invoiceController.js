@@ -11,8 +11,42 @@ exports.getAllInvoice = async (req, res) => {
   }
 };
 
-// Controller: Get invoices by company ID
+// Controller: Get invoices by  ID
 exports.getInvoiceById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('Fetching invoices with ID:', id);
+
+    const [results] = await db.query('SELECT * FROM invoices WHERE id = ?', [id]);
+    console.log('before population');
+    
+    console.log('Query Results:', results);
+    
+    let finalResult = await Promise.all(
+        results.map( async(result) => {
+            let [items] = await db.query('Select * from items where invoice_id = ?' ,[result.id])
+            result.items = items
+            return result
+        })
+    )
+    console.log('after population');
+    console.log(finalResult);
+    
+
+    if (results.length === 0) {
+      console.log('No invoice found.');
+      return res.status(404).json({ message: 'No invoice found for this id.' });
+    }
+
+    res.status(200).json(results);
+  } catch (err) {
+    console.error('Error during DB query:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Controller: Get invoices by company ID
+exports.getInvoiceByCompanyId = async (req, res) => {
   try {
     const { id } = req.params;
     console.log('Fetching invoices for company ID:', id);

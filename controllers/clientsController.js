@@ -11,8 +11,26 @@ exports.getAllClients = async (req, res) => {
   }
 };
 
-// Get company by ID
+// Get client by ID
 exports.getClientById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [result] = await db.query('SELECT * FROM clients WHERE id = ?', [id]);
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: 'Clients not found' });
+    }
+
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch clients' });
+  }
+};
+
+// Get company by ID
+exports.getClientByCompanyId = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -61,9 +79,9 @@ exports.createClient = async (req, res) => {
 // Update an existing company
 exports.updateClient = async (req, res) => {
   const { id } = req.params;
-  const {  name, email, number, address, companyId  } = req.body;
+  const {  name, email, number, address  } = req.body;
 
-  if (!name || !email || !number || !address || !companyId) {
+  if (!name || !email || !number || !address ) {
 
     return res.status(400).json({ error: 'All fields are required for update' });
   }
