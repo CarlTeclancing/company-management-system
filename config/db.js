@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise'); // use promise-based API
+const mysql = require('mysql2'); // use promise-based API
 
 // Immediately create and export a pool or connection
 const connection = mysql.createPool({ // prefer pool for scalability
