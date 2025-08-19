@@ -24,6 +24,21 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+// Get users by company ID
+exports.getUsersByCompanyId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await db.query('SELECT * FROM users WHERE company_id = ?', [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'No users found for this company' });
+    }
+    res.status(200).json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
 
 // Create new user
 exports.createUser = async (req, res) => {
