@@ -16,7 +16,7 @@ exports.getCompanyById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const [result] = await db.query('SELECT * FROM company WHERE id = ?', [id]);
+    const [result] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
 
     if (result.length === 0) {
       return res.status(404).json({ error: 'Company not found' });

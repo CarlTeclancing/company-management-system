@@ -1,0 +1,858 @@
+{
+	"info": {
+		"_postman_id": "5469fcb9-3de6-43b6-a229-502a92a91edc",
+		"name": "CMS - Projina",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "invoices",
+			"item": [
+				{
+					"name": "create-invoice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"testing 3 \",\r\n    \"description\":\"testing invoice delete\",\r\n    \"client_id\":1,\r\n    \"user_id\":120,\r\n    \"company_id\":14\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/invoices/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"invoices",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-invoices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/invoices/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"invoices",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-invoice-by-id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"client payment\",\r\n    \"description\":\"pays the employee Thomas\",\r\n    \"client_id\":12,\r\n    \"user_id\":44,\r\n    \"company_id\":14\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/invoices/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"invoices",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-invoice",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-invoice",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/invoices/5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"invoices",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-invoice-by-companyId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/invoices/company/14",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"invoices",
+								"company",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "items",
+			"item": [
+				{
+					"name": "add-item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"tv\",\r\n    \"quantity\":1,\r\n    \"price\":\"100000\",\r\n    \"invoice_id\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/items/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"items",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/items/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"items",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/items/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"items",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-item-invoice",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/items/invoice/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"items",
+								"invoice",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/items/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"items",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"test\",\r\n    \"quantity\":1,\r\n    \"price\":\"10000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/items/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"items",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "client",
+			"item": [
+				{
+					"name": "add-client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Test4\",\r\n    \"email\":\"test4@gmail.com\",\r\n    \"number\":\"689898989\",\r\n    \"address\":\"Yaounde\",\r\n    \"companyId\":\"14\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/clients/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"clients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-clients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/clients/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"clients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-client",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/clients/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-company-client",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/clients/company/14",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"clients",
+								"company",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-client",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/clients/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"clients",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-client",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"James\",\r\n    \"email\":\"James@gmail.com\",\r\n    \"number\":\"67777777\",\r\n    \"address\":\"Yaounde\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/clients/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "company",
+			"item": [
+				{
+					"name": "create-company",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"company\":\"test\",\r\n    \"type\":\"company\",\r\n    \"currency\":\"xaf\",\r\n    \"employeeCount\":\"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/company",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-company",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/company",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-company",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/company/24",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"company",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-company",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"company\":\"new test\",\r\n    \"type\":\"company\",\r\n    \"currency\":\"xaf\",\r\n    \"employeeCount\":\"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/company/24",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"company",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-company",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/company/24",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"company",
+								"24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "finances",
+			"item": [
+				{
+					"name": "add-finance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"withdraw\",\r\n    \"amount\":5000,\r\n    \"notes\":\"...\",\r\n    \"recordedBy\":12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/finance",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"finance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-finance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/finance",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"finance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-finance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/finance/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"finance",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-finance",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"withdraw\",\r\n    \"amount\":25000,\r\n    \"notes\":\"urgent!!!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/finance/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"finance",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-finance",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/finance/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"finance",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "inventory",
+			"item": [
+				{
+					"name": "add-inventory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"test2\",\r\n    \"description\":\"testing\",\r\n    \"quantity\":1,\r\n    \"price\":1,\r\n    \"status\":\"un-available\",\r\n    \"createdBy\":12,\r\n    \"company_id\":14\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/inventory/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"inventory",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-inventory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/inventory/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"inventory",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-inventory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/inventory/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"inventory",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-inventory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"update test\",\r\n    \"description\":\"testing\",\r\n    \"quantity\":10,\r\n    \"price\":10,\r\n    \"status\":\"un-available\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/inventory/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"inventory",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-inventory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/inventory/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"inventory",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-quantity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":2,\r\n    \"qty\":5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/inventory/add-qty",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"inventory",
+								"add-qty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reduce-quantity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":2,\r\n    \"qty\":25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/inventory/reduce-qty",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"inventory",
+								"reduce-qty"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
