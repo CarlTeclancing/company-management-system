@@ -1,15 +1,15 @@
 const express = require('express')
-const { addQty, removeQty } = require('../controllers/inventoryController')
+const { addQty, removeQty, addInventory, getAllInventory, getInventoryById, updateInventory, deleteInventory } = require('../controllers/inventoryController')
 const router = express.Router()
 
 router.route("/")
-.post()
-.get()
+.post(addInventory)
+.get(getAllInventory)
 
 router.route("/:id")
-.get()
-.put()
-.delete()
+.get(getInventoryById)
+.put(updateInventory)
+.delete(deleteInventory)
 
 router.post("/add-qty" ,addQty)
 router.post("/remove-qty" ,removeQty)
