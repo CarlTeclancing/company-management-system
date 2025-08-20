@@ -40,8 +40,27 @@ app.use('/v1/api/finance', require('./routes/financeRoutes'));
 app.use('/v1/api/meetings', require('./routes/meetingsRoutes'));
 app.use('/V1/api/clients', require('./routes/clientsRoutes'));
 
+
 app.use('/v1/api/invoices', invoiceRoute)
 app.use('/v1/api/items', itemRoutes)
-
+// Add this before app.listen()
+app.get('/', (req, res) => {
+    res.json({
+        message: "Welcome to the API. Here are the available routes:",
+        routes: {
+            "/v1/api/auth": "Authentication (login, register, etc.)",
+            "/v1/api/users": "User management (CRUD operations for users)",
+            "/v1/api/company": "Company information and management",
+            "/v1/api/projects": "Project management (create, update, list projects)",
+            "/v1/api/tasks": "Task management for projects",
+            "/v1/api/inventory": "Inventory/stock management",
+            "/v1/api/finance": "Financial operations and records",
+            "/v1/api/meetings": "Meeting scheduling and management",
+            "/v1/api/clients": "Client information and management",
+            "/v1/api/invoices": "Invoice management",
+            "/v1/api/items": "Item/product management"
+        }
+    });
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));
