@@ -8,6 +8,6 @@ router.post('/', createClient);
 router.put('/:id', updateClient);
 router.delete('/:id', deleteClient);
 
-router.get("/company/:id" ,getClientByCompanyId)
+router.get("/company/:id", getClientByCompanyId);
 
 module.exports = router;
