@@ -29,6 +29,7 @@ const authRoutes = require('./auth/authRoutes');
 const invoiceRoute = require('./routes/invoiceRoutes')
 const itemRoutes = require('./routes/itemRoutes')
 const categoryRoutes = require('./routes/categoryRoutes')
+const contactRoutes = require('./routes/contactRoutes')
 
 app.use('/v1/api/auth', authRoutes);
 app.use('/v1/api/users', require('./routes/userRoutes'));
@@ -43,6 +44,7 @@ app.use('/V1/api/clients', require('./routes/clientsRoutes'));
 app.use('/v1/api/category' ,categoryRoutes)
 app.use('/v1/api/invoices', invoiceRoute)
 app.use('/v1/api/items', itemRoutes)
+app.use("/v1/api/contact" ,contactRoutes)
 
 // Add this before app.listen()
 app.get('/', (req, res) => {
