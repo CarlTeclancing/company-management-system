@@ -41,8 +41,9 @@ app.use('/v1/api/meetings', require('./routes/meetingsRoutes'));
 app.use('/V1/api/clients', require('./routes/clientsRoutes'));
 
 
-app.use('/v1/api/invoices', invoiceRoute)
-app.use('/v1/api/items', itemRoutes)
+app.use('/v1/api/invoices', invoiceRoute);
+app.use('/v1/api/items', itemRoutes);
+app.use('/v1/api/ai-chat', require('./routes/aiChatRoutes'));
 // Add this before app.listen()
 app.get('/', (req, res) => {
     res.json({

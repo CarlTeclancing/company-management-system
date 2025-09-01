@@ -88,6 +88,7 @@ exports.createInvoice = async (req, res) => {
       date,
       user_id,
       company_id,
+      
   } = req.body;
   if (!title  || !description || !client_id || !user_id || !company_id) {
     return res.status(400).json({ error: 'All fields are required' });
@@ -103,6 +104,7 @@ exports.createInvoice = async (req, res) => {
     res.status(201).json({ id: result.insertId, ...req.body });
   } catch (error) {
     res.status(500).json({ error: error.message });
+    console.log(error.message);
   }
 };
 

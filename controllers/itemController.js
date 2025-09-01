@@ -61,7 +61,6 @@ exports.addItem = async (req, res) => {
       name,
       quantity,
       price,
-    //   date,
       invoice_id,
   } = req.body;
   if (!name  || !quantity || !price || !invoice_id) {
