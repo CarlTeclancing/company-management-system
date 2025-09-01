@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 # Ignore environment files
 *.env
 *.env.*
+=======
+.env
+.env.process
+node_modules/
+>>>>>>> 04a66826bd4880c511e056e65659610a9e4b5952
