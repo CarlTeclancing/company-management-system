@@ -41,18 +41,11 @@ app.use('/v1/api/finance', require('./routes/financeRoutes'));
 app.use('/v1/api/meetings', require('./routes/meetingsRoutes'));
 app.use('/V1/api/clients', require('./routes/clientsRoutes'));
 
-<<<<<<< HEAD
-
-app.use('/v1/api/invoices', invoiceRoute);
-app.use('/v1/api/items', itemRoutes);
-app.use('/v1/api/ai-chat', require('./routes/aiChatRoutes'));
-=======
 app.use('/v1/api/category' ,categoryRoutes)
 app.use('/v1/api/invoices', invoiceRoute)
 app.use('/v1/api/items', itemRoutes)
 app.use("/v1/api/contact" ,contactRoutes)
 
->>>>>>> 04a66826bd4880c511e056e65659610a9e4b5952
 // Add this before app.listen()
 app.get('/', (req, res) => {
     res.json({
