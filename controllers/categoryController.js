@@ -13,16 +13,16 @@ exports.getAllCategory = async (req, res) => {
 // Controller: Create a new item for an invoice
 exports.createCategory = async (req, res) => {
   const {
-      name,company_id
+      name, description, company_id
   } = req.body;
-  if (!name || !company_id) {
+  if (!name || !description || !company_id) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
     const [result] = await db.query(
-      'INSERT INTO category (name,company_id) VALUES (?, ?)',
-      [name, company_id]
+      'INSERT INTO category (name, description, company_id) VALUES (?, ?, ?)',
+      [name, description, company_id]
     );
     console.log(result);
     

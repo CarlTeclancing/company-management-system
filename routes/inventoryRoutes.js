@@ -6,7 +6,7 @@ router.route("/")
 .post(addInventory)
 .get(getAllInventory)
 
-router.get("/company/id" ,getInventoryByCompanyId)
+router.get("/company/:id" ,getInventoryByCompanyId)
 
 router.route("/:id")
 .get(getInventoryById)

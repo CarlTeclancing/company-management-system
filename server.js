@@ -47,7 +47,7 @@ app.use('/v1/api/items', itemRoutes)
 app.use("/v1/api/contact" ,contactRoutes)
 
 // Add this before app.listen()
-app.get('/', (req, res) => {
+app.get('/v1/api/', (req, res) => {
     res.json({
         message: "Welcome to the API. Here are the available routes:",
         routes: {
@@ -62,6 +62,16 @@ app.get('/', (req, res) => {
             "/v1/api/clients": "Client information and management",
             "/v1/api/invoices": "Invoice management",
             "/v1/api/items": "Item/product management"
+        }
+    });
+});
+app.get('/', (req, res) => {
+    res.json({
+        message: "Welcome to the API. Here are the available routes:",
+        routes: {
+            "/v1/api/": "Virsion one API root endpoint",
+            "/v2/api/": "Virsion one API root endpoint",
+
         }
     });
 });
