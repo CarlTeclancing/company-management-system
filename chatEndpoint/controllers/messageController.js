@@ -57,7 +57,7 @@ exports.getDirectMessages = async (req, res) => {
 };
 
 // Create a new direct message
-exports. createDirectMessage = async (req, res) => {
+exports.createDirectMessage = async (req, res) => {
     const { senderId, receiverId, content } = req.body;
     try {
         const [result] = await db.execute(

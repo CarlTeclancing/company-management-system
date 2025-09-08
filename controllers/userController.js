@@ -24,6 +24,7 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 // Get users by company ID
 exports.getUsersByCompanyId = async (req, res) => {
   const { id } = req.params;
@@ -38,32 +39,41 @@ exports.getUsersByCompanyId = async (req, res) => {
   }
 };
 
-
-
-// Create new user
+// ✅ Create new user (Admin create) — matches auth.register
 exports.createUser = async (req, res) => {
   const { name, email, password, role, number, address, companyId } = req.body;
 
   try {
     // Check if user already exists
-    const [user] = await db.query(
+    const [existingUser] = await db.execute(
       'SELECT * FROM users WHERE email = ?',
       [email]
     );
-    if (user.length > 0) {
+    if (existingUser.length > 0) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash password
+    // Hash password (same as auth.register)
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert user
-    await db.query(
+    const values = [
+      name,
+      email,
+      hashedPassword,
+      role,
+      number,
+      address,
+      companyId,
+    ];
+
+    // Insert user into DB
+    await db.execute(
       'INSERT INTO users (`full_name`, `email`, `password`, `role`, `phone`, `address`, `company_id`) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [name, email, hashedPassword, role, number, address, companyId]
+      values
     );
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'User created successfully by admin' });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error', error: error.message });
