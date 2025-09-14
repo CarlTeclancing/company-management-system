@@ -63,25 +63,17 @@ exports.createTask = async (req, res) => {
 exports.updateTask = async (req, res) => {
   const { id } = req.params;
   const {
-    title,
-    description,
-    priority,
-    assignee,
-    status,
-    date,
-    user_id,
-    company_id
+    status
   } = req.body;
 
   try {
     await db.query(
-      'UPDATE tasks SET title = ?, description = ?, priority = ?, assigned_to = ?, status = ?, due_date = ?, company_id = ? WHERE id = ?',
-      [title, description, priority, assignee, status, date, company_id, id]
+      'UPDATE tasks SET status = ? WHERE id = ?',
+      [status, id]
     );
 
     res.status(200).json({
       id,
-      title,
       description,
       priority,
       assignee,
