@@ -31,6 +31,7 @@ const invoiceRoute = require('./routes/invoiceRoutes')
 const itemRoutes = require('./routes/itemRoutes')
 const categoryRoutes = require('./routes/categoryRoutes')
 const contactRoutes = require('./routes/contactRoutes')
+const dashboardRoutes = require('./routes/dashboardRoutes');
 
 app.use('/v1/api/auth', authRoutes);
 app.use('/v1/api/users', require('./routes/userRoutes'));
@@ -41,6 +42,7 @@ app.use('/v1/api/inventory', require('./routes/inventoryRoutes'));
 app.use('/v1/api/finance', require('./routes/financeRoutes'));
 app.use('/v1/api/meetings', require('./routes/meetingsRoutes'));
 app.use('/V1/api/clients', require('./routes/clientsRoutes'));
+app.use('/api/dashboard', dashboardRoutes);
 
 app.use('/v1/api/category' ,categoryRoutes)
 app.use('/v1/api/invoices', invoiceRoute)
