@@ -11,11 +11,21 @@ const userRoutes = require('./routes/userRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 
 const app = express();
-app.use(cors());
+
+// === Allow CORS from all origins ===
+app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allowedHeaders: ['Content-Type', 'Authorization'] }));
 app.use(express.json());
 
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+
+// === Socket.io with CORS ===
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }
+});
 
 socketHandler(io); // init socket
 
@@ -27,5 +37,5 @@ app.use('/api/messages', messageRoutes);
 app.get('/', (req, res) => res.send('Chat API running...'));
 
 server.listen(process.env.PORT || 8000, () => {
-    console.log(`Server running on port ${process.env.PORT || 8000}`);
+  console.log(`Server running on port ${process.env.PORT || 8000}`);
 });
