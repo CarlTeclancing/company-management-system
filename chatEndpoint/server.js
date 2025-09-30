@@ -13,9 +13,18 @@ const messageRoutes = require('./routes/messageRoutes');
 const app = express();
 
 // === Allow CORS from all origins ===
-app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allowedHeaders: ['Content-Type', 'Authorization'] }));
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Handle preflight requests
+app.options('*', cors());
+
 app.use(express.json());
 
+// === Create server ===
 const server = http.createServer(app);
 
 // === Socket.io with CORS ===
@@ -27,15 +36,21 @@ const io = new Server(server, {
   }
 });
 
-socketHandler(io); // init socket
+// Init socket handler
+socketHandler(io);
 
 // === API Routes ===
 app.use('/api/channels', channelRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/messages', messageRoutes);
 
-app.get('/', (req, res) => res.send('Chat API running...'));
+// Root check
+app.get('/', (req, res) => {
+  res.send('Chat API running...');
+});
 
-server.listen(process.env.PORT || 8000, () => {
-  console.log(`Server running on port ${process.env.PORT || 8000}`);
+// === Start server ===
+const PORT = process.env.PORT || 8000;
+server.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });
