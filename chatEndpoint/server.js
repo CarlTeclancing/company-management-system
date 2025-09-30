@@ -7,8 +7,9 @@ import { Server } from "socket.io";
 
 // Import routes
 //import authRoutes from "./routes/auth.js";
-import channelRoutes from "./routes/channel.js";
-import messageRoutes from "./routes/message.js";
+import channelRoutes from "./routes/channelRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
+import messageRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 
@@ -28,9 +29,9 @@ app.use(
 app.use(express.json());
 
 // Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/channels", channelRoutes);
-app.use("/api/messages", messageRoutes);
+//app.use("/api/auth", authRoutes);
+app.use("/channels", channelRoutes);
+app.use("/messages", messageRoutes);
 
 // ✅ Handle favicon.ico gracefully (prevents crash)
 app.get("/favicon.ico", (req, res) => res.status(204).end());
