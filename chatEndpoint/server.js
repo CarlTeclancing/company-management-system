@@ -8,7 +8,7 @@ const { Server } = require("socket.io");
 //const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/usersRoutes");
 const channelRoutes = require("./routes/channelsRoutes");
-const channelRoutes = require("./routes/userRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 const server = http.createServer(app);
