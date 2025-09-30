@@ -5,9 +5,10 @@ const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
 
-const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/users");
-const channelRoutes = require("./routes/channels");
+//const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/usersRoutes");
+const channelRoutes = require("./routes/channelsRoutes");
+const channelRoutes = require("./routes/userRoutes");
 
 const app = express();
 const server = http.createServer(app);
@@ -15,9 +16,9 @@ const server = http.createServer(app);
 app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] }));
 app.use(express.json());
 
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/channels", channelRoutes);
+//app.use("/api/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/channels", channelRoutes);
 
 app.get("/", (req, res) => res.send("API running ✅"));
 
