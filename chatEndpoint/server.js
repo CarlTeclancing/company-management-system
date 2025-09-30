@@ -6,7 +6,7 @@ import http from "http";
 import { Server } from "socket.io";
 
 // Import routes
-import authRoutes from "./routes/auth.js";
+//import authRoutes from "./routes/auth.js";
 import channelRoutes from "./routes/channel.js";
 import messageRoutes from "./routes/message.js";
 
